@@ -6,6 +6,8 @@ import helmet from 'helmet';
 import cors from 'cors';
 import { catchErrors } from './utils/catchErrors.js';
 import authRoutes from './routes/auth.routes.js'
+import requestId from './middleware/requestId.middleware.js'
+import { errorHandler, notFoundHandler } from './middleware/error.middleware.js'
 
 dotenv.config();
 
@@ -17,6 +19,8 @@ app.use(helmet());
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.use(requestId)
 
 // Health Check
 app.get('/health-check', catchErrors(async (req: Request, res: Response) => {
@@ -33,18 +37,18 @@ app.get('/health-check', catchErrors(async (req: Request, res: Response) => {
     currentTime: new Date().toISOString(),
     environment: process.env,
   };
+
   res.status(200).json(healthCheck);
 }));
 
 app.use('/auth', authRoutes)
 
-// Error handling middleware
-app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-  console.error(err.stack);
-  res.status(500).json({ message: 'Something went wrong!', error: err.message });
-});
+app.use(notFoundHandler);
+app.use(errorHandler);
 
 // Start the server
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
+
+export default app;

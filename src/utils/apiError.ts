@@ -1,4 +1,4 @@
-import { BAD_REQUEST, UNAUTHORIZED, FORBIDDEN, NOT_FOUND, INTERNAL_SERVER_ERROR, HttpStatusCode } from "../constants/http";
+import { BAD_REQUEST, UNAUTHORIZED, FORBIDDEN, NOT_FOUND, INTERNAL_SERVER_ERROR, HttpStatusCode } from "../constants/http.js";
 import { ErrorDetails } from "../types";
 
 class APIError extends Error {
