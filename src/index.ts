@@ -24,21 +24,8 @@ app.use(requestId)
 
 // Health Check
 app.get('/health-check', catchErrors(async (req: Request, res: Response) => {
-  const healthCheck = {
-    status: 'UP',
-    uptime: process.uptime(),
-    memoryUsage: process.memoryUsage(),
-    cpuUsage: process.cpuUsage(),
-    loadAverage: os.loadavg(),
-    freeMemory: os.freemem(),
-    totalMemory: os.totalmem(),
-    platform: os.platform(),
-    arch: os.arch(),
-    currentTime: new Date().toISOString(),
-    environment: process.env,
-  };
 
-  res.status(200).json(healthCheck);
+  res.status(200).json({ status: 'UP' });
 }));
 
 app.use('/auth', authRoutes)
