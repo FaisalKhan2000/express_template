@@ -2,6 +2,8 @@ import express, { Request, Response, NextFunction } from 'express';
 import os from 'os';
 import process from 'process';
 import dotenv from 'dotenv';
+import helmet from 'helmet';
+import cors from 'cors';
 import { catchErrors } from './utils/catchErrors.js';
 import authRoutes from './routes/auth.routes.js'
 
@@ -10,6 +12,13 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Security Middleware
+app.use(helmet());
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Health Check
 app.get('/health-check', catchErrors(async (req: Request, res: Response) => {
   const healthCheck = {
     status: 'UP',

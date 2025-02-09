@@ -13,8 +13,11 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@types/cors": "^2.8.17",
+    "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^5.0.1",
+    "helmet": "^8.0.0",
     "ts-node": "^10.9.2"
   },
   "devDependencies": {
