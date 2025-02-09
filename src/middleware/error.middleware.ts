@@ -11,10 +11,12 @@ const handleZodError = (res: Response, error: ZodError, path: string, requestId:
     code: issue.code
   }));
 
+  const currentTime = new Date().toISOString()
   const errorDetails: ErrorDetails = {
     code: "VALIDATION_ERROR",
     details: { validationErrors },
     source: path,
+    timestamp: currentTime
   };
 
   const apiError = APIError.badRequest('Validation Error', errorDetails);
